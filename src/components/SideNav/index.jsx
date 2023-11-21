@@ -27,42 +27,42 @@ const Sidebar = ({ selectedIndex }) => {
       name: 'Dashboard',
       link: '/app',
       icon: <DashboardSharp />,
-      activeIndex: 1,
+      activeIndex: 0,
       requiredRoles: ['admin'],
     },
     {
       name: 'Appointments',
       link: '/appointments',
       icon: <ManageAccounts />,
-      activeIndex: 2,
+      activeIndex: 1,
       requiredRoles: ['admin'],
     },
     {
       name: 'Billing',
       link: '/billing',
       icon: <AttachMoney />,
-      activeIndex: 3,
+      activeIndex: 2,
       requiredRoles: ['admin'],
     },
     {
       name: 'Services',
       link: '/services',
       icon: <Lan />,
-      activeIndex: 4,
+      activeIndex: 3,
       requiredRoles: ['admin'],
     },
     {
       name: 'Offers',
       link: '/offers',
       icon: <LocalOffer />,
-      activeIndex: 5,
+      activeIndex: 4,
       requiredRoles: ['admin'],
     },
     {
       name: 'Customers',
       link: '/customers',
       icon: <PeopleAlt />,
-      activeIndex: 6,
+      activeIndex: 5,
       requiredRoles: ['admin'],
     },
   ];
@@ -75,10 +75,11 @@ const Sidebar = ({ selectedIndex }) => {
     navigate('/');
     localStorage.removeItem('token');
   };
+
+  const [selectedRoute, setSelectedRoute] = useState(0);
   const handleListItemClick = (index) => {
     setSelectedRoute(index);
   };
-  const [selectedRoute, setSelectedRoute] = useState(null);
 
   return (
     <div>
@@ -99,11 +100,7 @@ const Sidebar = ({ selectedIndex }) => {
                 component={Link}
                 to={route.link}
                 onClick={() => handleListItemClick(index)}
-                className={`${
-                  // Add the 'border-r-4' class to add a white right border to the selected item
-                  // You can use 'border-l-4' for a left border
-                  index === route.activeIndex ? 'border-r-4' : ''
-                }`}
+                className={`${index === selectedRoute ? 'border-l-4' : ''}`}
               >
                 <ListItemIcon style={{ color: 'white' }}>
                   {route.icon}

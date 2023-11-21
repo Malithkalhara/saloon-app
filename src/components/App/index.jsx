@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import AppRouter from 'components/AppRouter';
@@ -9,10 +10,9 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        {/* <ThemeProvider theme={theme}> */}
-          <AppRouter />
-        {/* </ThemeProvider> */}
+        <AppRouter />
       </Router>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

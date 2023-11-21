@@ -16,8 +16,8 @@ const AppRouter = () => {
         <Route exact path="/app" element={<ProtectedRoute />}>
           <Route path="/app" element={<Home />} />
         </Route>
-        <Route exact path="/appointments" element={<ProtectedRoute />}>
-          <Route exact path="/appointments" element={<Appointmemts />} />
+        <Route exact element={<ProtectedRoute />}>
+          <Route exact path="/appointments/*" element={<Appointmemts />} />
         </Route>
         <Route exact path="/billing" element={<ProtectedRoute />}>
           <Route exact path="/billing" element={<Billing />} />
@@ -25,8 +25,8 @@ const AppRouter = () => {
         <Route exact path="/customers" element={<ProtectedRoute />}>
           <Route exact path="/customers" element={<Customers />} />
         </Route>
-        <Route exact path="/services" element={<ProtectedRoute />}>
-          <Route exact path="/services" element={<Services />} />
+        <Route exact element={<ProtectedRoute />}>
+          <Route exact path="/services/*" element={<Services />} />
         </Route>
         <Route exact path="/offers" element={<ProtectedRoute />}>
           <Route exact path="/offers" element={<Offers />} />
