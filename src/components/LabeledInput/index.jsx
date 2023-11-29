@@ -1,13 +1,12 @@
 import { Input } from 'antd';
-import { Controller } from 'react-hook-form';
 
-const LabledInput = ({ label, control }) => {
+const LabledInput = ({ name, Controller, label, control }) => {
   return (
-    <div className="flex gap-4">
-      <div className="">{label}</div>
+    <div className="flex items-center gap-4">
+      <div>{label}</div>
       <div className="w-full">
         <Controller
-          name="input1"
+          name={name}
           control={control}
           defaultValue=""
           render={({ field }) => <Input size="large" {...field} />}

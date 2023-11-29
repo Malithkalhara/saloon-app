@@ -1,17 +1,16 @@
 import { Input } from 'antd';
-import { Controller } from 'react-hook-form';
 
-const LabledTextArea = ({ label, control }) => {
+const LabledTextArea = ({ name, Controller, label, control }) => {
   const { TextArea } = Input;
   return (
-    <div className="flex gap-4">
+    <div className="flex item-center gap-4">
       <div className="">{label}</div>
       <div className="w-full">
         <Controller
-          name="input1"
+          name={name}
           control={control}
           defaultValue=""
-          render={({ field }) => <TextArea {...field} />}
+          render={({ field }) => <TextArea {...field} rows={6} />}
         />
       </div>
     </div>

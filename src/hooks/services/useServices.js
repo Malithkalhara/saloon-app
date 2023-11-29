@@ -1,8 +1,8 @@
 import api from 'api';
 import { useQuery } from 'react-query';
 
-const useItems = () => {
-  const fetchItems = async () => {
+const useServices = () => {
+  const fetchServices = async () => {
     try {
       const services = await api.get('services');
       //const data = await templates.json();
@@ -11,9 +11,9 @@ const useItems = () => {
     }
   };
 
-  return useQuery(['items'], fetchItems, {
+  return useQuery(['services'], fetchServices, {
     refetchOnWindowFocus: false,
   });
 };
 
-export default useItems;
+export default useServices;

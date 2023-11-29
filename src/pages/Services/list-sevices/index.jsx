@@ -1,7 +1,7 @@
 import { Space, Tag } from 'antd';
 import DataTable from 'components/DataTable';
 import IconButton from 'components/IconButton';
-import useItems from 'hooks/services/useItems';
+import useServices from 'hooks/services/useServices';
 import { useNavigate } from 'react-router-dom';
 import { FadeLoader } from 'react-spinners';
 
@@ -79,7 +79,7 @@ const data = [
 
 const ServicesList = () => {
   const navigate = useNavigate();
-  const { data: items, isLoading } = useItems();
+  const { data: sevices, isLoading } = useServices();
 
   // useEffect(() => {
   //   console.log(items);
