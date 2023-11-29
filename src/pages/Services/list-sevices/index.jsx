@@ -2,6 +2,7 @@ import { Space, Tag } from 'antd';
 import DataTable from 'components/DataTable';
 import IconButton from 'components/IconButton';
 import useServices from 'hooks/services/useServices';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FadeLoader } from 'react-spinners';
 
@@ -13,45 +14,44 @@ const columns = [
     render: (text) => <a>{text}</a>,
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'Details',
+    dataIndex: 'details',
+    key: 'details',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'Price',
+    dataIndex: 'price',
+    key: 'price',
   },
   {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (tags) => (
+    title: 'Type',
+    key: 'type',
+    dataIndex: 'type',
+    render: (type) => (
       <span>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
+        <Tag color="green">{type.toUpperCase()}</Tag>
       </span>
     ),
   },
   {
-    title: 'Action',
+    title: '',
     key: 'action',
     render: (_, record) => (
       <Space size="middle">
-        <a>Invite {record.name}</a>
         <a>Delete</a>
       </Space>
     ),
   },
+  // {
+  //   title: 'Action',
+  //   key: 'action',
+  //   render: (_, record) => (
+  //     <Space size="middle">
+  //       <a>Invite {record.name}</a>
+  //       <a>Delete</a>
+  //     </Space>
+  //   ),
+  // },
 ];
 const data = [
   {
@@ -79,11 +79,12 @@ const data = [
 
 const ServicesList = () => {
   const navigate = useNavigate();
+  const [servicedata, setServiceData] = useState([]);
   const { data: sevices, isLoading } = useServices();
 
-  // useEffect(() => {
-  //   console.log(items);
-  // }, [items]);
+  useEffect(() => {
+    if (sevices) setServiceData(sevices);
+  }, [sevices]);
 
   const handleClick = () => {
     navigate('create');
@@ -102,7 +103,7 @@ const ServicesList = () => {
             <IconButton label="Add Service" onClick={handleClick} />
           </div>
           <div>
-            <DataTable columns={columns} data={data} />
+            <DataTable columns={columns} data={servicedata} />
           </div>
         </>
       )}

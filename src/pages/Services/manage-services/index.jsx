@@ -3,13 +3,15 @@ import LabeledSelect from 'components/LabeledSelect';
 import LabeledTextArea from 'components/LabeledTextArea';
 import ModifiedButton from 'components/ModifiedButton';
 import OutlinedButton from 'components/OutlinedButton';
+import useCreateService from 'hooks/services/useCreateServices';
 import { Controller, useForm } from 'react-hook-form';
 
 const ManageServices = () => {
   const { control, handleSubmit } = useForm();
+  const { mutateAsync: serviceCreater } = useCreateService();
 
   const onSubmit = (data) => {
-    console.log(data);
+    serviceCreater(data);
     // Handle form submission logic here
   };
 
@@ -73,7 +75,6 @@ const ManageServices = () => {
             </div>
           </div>
           <div className="flex justify-end">
-            {/* <button type="submit">test</button> */}
             <div>
               <ModifiedButton label="Save" type="submit" />
             </div>

@@ -7,7 +7,8 @@ const useCreateService = () => {
   const createService = async (newServiceData) => {
     try {
       const createdService = await api.post('services', newServiceData);
-      return createdService.data;
+      console.log('createdService', createdService);
+      return createdService?.data;
     } catch (error) {
       throw new Error(
         error.response ? error.response.data.message : 'Error creating service'
