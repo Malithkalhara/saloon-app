@@ -1,6 +1,6 @@
-import { Input } from 'antd';
+import { TimePicker } from 'antd';
 
-const LabeledInput = ({ name, Controller, label, control }) => {
+const LabeledTimePicker = ({ name, Controller, label, control }) => {
   return (
     <div className="flex items-center gap-4 m-2">
       <div className="w-1/6">{label}</div>
@@ -9,11 +9,11 @@ const LabeledInput = ({ name, Controller, label, control }) => {
           name={name}
           control={control}
           defaultValue=""
-          render={({ field }) => <Input size="large" {...field} />}
+          render={({ field }) => <TimePicker size='large' format="HH" {...field}/>}
         />
       </div>
     </div>
   );
 };
 
-export default LabeledInput;
+export default LabeledTimePicker;

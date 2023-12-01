@@ -135,7 +135,7 @@ const AppointmentList = () => {
         startAccessor="start"
         endAccessor="end"
       />
-      <div className="absolute bottom-0 right-0 p-8">
+      <div className="absolute bottom-0 right-0 p-8" style={{zIndex:999}}>
         <PlusButton onCLick={handleClick} />
       </div>
     </div>

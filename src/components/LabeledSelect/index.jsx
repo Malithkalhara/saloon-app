@@ -4,9 +4,9 @@ const { Option } = Select;
 
 const LabeledSelect = ({ name, Controller, label, control, options }) => {
   return (
-    <div className="flex items-center gap-4">
-      <div>{label}</div>
-      <div className="w-full">
+    <div className="flex items-center gap-4 m-2">
+      <div className="w-1/6">{label}</div>
+      <div className="w-5/6">
         <Controller
           name={name} // You can customize the name attribute as needed
           control={control}
