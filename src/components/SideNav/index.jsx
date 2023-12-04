@@ -15,6 +15,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
+import ModifiedButton from 'components/ModifiedButton';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Assuming you are using React Router
 
@@ -81,6 +82,10 @@ const Sidebar = ({ selectedIndex }) => {
     setSelectedRoute(index);
   };
 
+  const handleMakeAppointment = () => {
+    navigate('appointments/create');
+  };
+
   return (
     <div>
       <Drawer
@@ -90,9 +95,15 @@ const Sidebar = ({ selectedIndex }) => {
         onClose={toggleDrawer}
       >
         <div
-          className="pt-20 w-64 h-full bg-blue-500"
+          className="pt-8 w-64 h-full bg-blue-500"
           style={{ display: 'flex', flexDirection: 'column' }}
         >
+          <div className="flex justify-center pb-8 pt-4">
+            <ModifiedButton
+              label="Make An Appoitnment"
+              onClick={handleMakeAppointment}
+            />
+          </div>
           <List>
             {routeList.map((route, index) => (
               <ListItem
