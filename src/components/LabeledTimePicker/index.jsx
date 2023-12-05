@@ -9,7 +9,7 @@ const LabeledTimePicker = ({ name, Controller, label, control }) => {
           name={name}
           control={control}
           defaultValue=""
-          render={({ field }) => <TimePicker size='large' format="HH" {...field}/>}
+          render={({ field }) => <TimePicker size='large' format="HH:mm" {...field}/>}
         />
       </div>
     </div>

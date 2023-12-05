@@ -8,20 +8,74 @@ import moment from 'moment';
 import { momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Controller, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { Select } from 'antd';
+import axios from 'axios';
+import api from 'api';
+import LabeledMultiSelect from 'components/LabeledMultiSelect';
 
 const localizer = momentLocalizer(moment);
 
 const ManageAppointments = () => {
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, reset } = useForm({});
+  const [services, setServices] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
-  const onSubmit = (data) => {
+  const fetchServices = async () => {
+    await api
+      .get('services')
+      .then((res) => {
+        console.log(res.data);
+        setServices(res.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const extractTime = (time) => {
+    const current = new Date(time);
+    const timeString = current.getHours() + ':' + current.getMinutes() +":00";
+    console.log(timeString);
+    return timeString;
+  };
+
+  const createAppointment = async (data)=>{
+    data.appointmentStartTime = extractTime(data.appointmentStartTime);
+    data.appointmentEndTime = extractTime(data.appointmentEndTime);
+    await api
+    .post('appointments', data)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
+  
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const onSubmit = async (data) => {
     console.log(data);
-    // Handle form submission logic here
+    setIsLoading(true);
+  
+    try {
+      await createAppointment(data);
+      // Clear the form data
+      reset({});
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleCancel = () => {
     console.log(data);
-    // Handle form submission logic here
   };
 
   const durations = [
@@ -111,14 +165,18 @@ const ManageAppointments = () => {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 pb-8">
-            <div>
-              <LabeledInput
-                label="Services"
-                name="itemIds"
-                control={control}
-                Controller={Controller}
-              />
-            </div>
+
+              <div>
+                <LabeledMultiSelect
+                  label="Services"
+                  name="serviceIds"
+                  control={control}
+                  Controller={Controller}
+                  options={services}
+                  placeholder={'Select Services'}
+                />
+              </div>
+
             <div>
               <LabeledDatePicker
                 label="Date"
@@ -132,7 +190,7 @@ const ManageAppointments = () => {
             <div>
               <LabeledTimePicker
                 label="Start Time"
-                name="appointmentTime"
+                name="appointmentStartTime"
                 control={control}
                 Controller={Controller}
               />
@@ -140,7 +198,7 @@ const ManageAppointments = () => {
             <div>
               <LabeledTimePicker
                 label="End Time"
-                name="appointmentTime"
+                name="appointmentEndTime"
                 control={control}
                 Controller={Controller}
               />
@@ -150,7 +208,7 @@ const ManageAppointments = () => {
           <div className="flex justify-end m-2">
             {/* <button type="submit">test</button> */}
             <div className="m-2">
-              <ModifiedButton label="Save" type="submit" />
+              <ModifiedButton label="Create" type="submit" isLoading={isLoading} />
             </div>
             <div className="ml-2 mb-2 mt-2">
               <OutlinedButton onClick={handleCancel} label="Cancel" />
