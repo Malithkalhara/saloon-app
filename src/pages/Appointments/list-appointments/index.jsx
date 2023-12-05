@@ -3,19 +3,62 @@ import moment from 'moment';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import api from 'api';
 
 const localizer = momentLocalizer(moment);
 
 const AppointmentList = () => {
   const navigate = useNavigate();
   const now = new Date();
+  const [eventList, setEventList] = useState([]);
+
+  const fetchAppointments = async () => {
+    await api
+      .get('appointments')
+      .then((res) => {
+        // console.log(res.data);
+        setEventList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(()=>{
+    fetchAppointments();
+  },[])
+
+  useEffect(() => {
+    console.log(eventList);
+  }, [eventList]);
+
+  const prepareEvents = () => {
+    const events = eventList.map((event) => {
+      return {
+        id: event.id,
+        title: event.service.name,
+        start: new Date(event.appointmentDate + ' ' + event.appointmentStartTime),
+        end: new Date(event.appointmentDate + ' ' + event.appointmentEndTime),
+      };
+    });
+    return events;
+  }
+
   const events = [
     {
       id: 0,
       title: 'All Day Event very long title',
       allDay: true,
-      start: new Date(2015, 3, 0),
-      end: new Date(2015, 3, 1),
+      start:new Date("2023-12-14T18:51:00.000Z"),
+      end:new Date("2023-12-14T22:56:00.000Z"),
+    },
+    {
+      id: 0,
+      title: 'All Day Event very long title',
+      allDay: true,
+      start: new Date(2023, 12, 5),
+      end: new Date(2023, 12, 5),
     },
     {
       id: 1,
